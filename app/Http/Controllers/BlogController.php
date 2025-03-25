@@ -12,4 +12,10 @@ class BlogController extends Controller
         $articles = Post::with('category')->latest()->take(3)->get();
         return view('blog.home', compact('articles'));
     }
+
+    public function show(Post $post)
+    {
+        $post->get();
+        return view('blog.show', compact('post'));
+    }
 }
