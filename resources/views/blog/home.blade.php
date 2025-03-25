@@ -26,24 +26,25 @@
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            @foreach($articles as $ $article)
+            @foreach($articles as $article)
             <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
-                <img src="{{ asset('images/'. $article->featured_image) }}" alt="{{ $article->title }}" class="w-full h-48 object-cover">
+                <img src="{{ asset('storage/'. $article->featured_image) }}" alt="{{ $article->title }}" class="w-full h-48 object-cover">
                 <div class="p-6">
                     <div class="flex items-center text-sm text-gray-500 mb-2">
-                        <span>{{ $article->categories->name }}</span>
+                        <span>{{ $article->category->category_name }}</span>
                         <span class="mx-2">•</span>
                         <span>{{ $article->created_at->format('D M Y') }}</span>
                     </div>
                     <h3 class="text-xl font-semibold text-gray-800 mb-3">{{ $article->title }}</h3>
-                    <p class="text-gray-600 mb-4">{{ Str::limit($article->content) }}</p>
-                    <a href="{{ route('posts.show', $article) }}" class="text-blue-600 hover:text-blue-800 font-medium">Baca Selengkapnya →</a>
+                    <p class="text-gray-600 mb-4">{!! Str::limit($article->content) !!}</p>
+                    <a href="{{ route('blog.show', $article) }}" class="text-blue-600 hover:text-blue-800 font-medium">Baca Selengkapnya →</a>
                 </div>
             </div>
             @endforeach
-        <div class="text-center mt-12">
-            <a href="{{route('blog.article')}}" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md font-semibold">Lihat Semua Artikel</a>
         </div>
+            <div class="text-center mt-12">
+                <a href="{{route('blog.article')}}" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md font-semibold">Lihat Semua Artikel</a>
+            </div>
     </div>
 </section>
 @endsection

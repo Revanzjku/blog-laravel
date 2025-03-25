@@ -20,7 +20,5 @@ Route::get('/category', [BlogController::class, 'category'])->name('blog.categor
 Route::get('/article', [BlogController::class, 'article'])->name('blog.article');
 Route::get('/about-us', [BlogController::class, 'about'])->name('blog.about');
 Route::get('/contact-us', [BlogController::class, 'contact'])->name('blog.contact');
-
-Route::resource('posts', PostController::class);
-Route::resource('categories', CategoryController::class);
+Route::get('/{post}', [BlogController::class, 'show'])->name('blog.show');
 

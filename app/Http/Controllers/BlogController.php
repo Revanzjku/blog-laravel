@@ -9,7 +9,7 @@ class BlogController extends Controller
 {
     public function index()
     {
-        $articles = Post::with('categories')->latest()->take(3)->get();
+        $articles = Post::with('category')->latest()->take(3)->get();
         return view('blog.home', compact('articles'));
     }
 }
