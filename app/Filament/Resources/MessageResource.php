@@ -34,16 +34,21 @@ class MessageResource extends Resource
         return $table
             ->columns([
                 //
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('message')
-                    ->limit(50),
+                    ->limit(50)
+                    ->tooltip(function (Tables\Columns\TextColumn $column): ?string {
+                        $state = $column->getState();
+                        return strlen($state) > 50 ? $state : null;
+                    })
+                    ->wrap(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Dikirim pada')
-                    ->dateTime(),
-                    IconColumn::make('is_read') // Tambahkan ikon status pesan
+                    ->dateTime()
+                    ->timezone('Asia/Jakarta'),
+                    IconColumn::make('is_read')
                     ->boolean()
                     ->trueIcon('heroicon-o-check-circle')
                     ->falseIcon('heroicon-o-clock')
@@ -57,6 +62,22 @@ class MessageResource extends Resource
                 ->action(fn ($record) => $record->update(['is_read' => true]))
                 ->visible(fn ($record) => !$record->is_read)
                 ->color('success'),
+                Tables\Actions\ViewAction::make()
+                    ->modalHeading(fn ($record) => "Detail Pesan dari {$record->name}")
+                    ->modalWidth('xl')
+                    ->form([
+                        Forms\Components\TextInput::make('name')
+                            ->label('Nama Pengirim')
+                            ->disabled(),
+                        Forms\Components\TextInput::make('email')
+                            ->label('Email')
+                            ->disabled(),
+                        Forms\Components\Textarea::make('message')
+                            ->label('Isi Pesan')
+                            ->disabled()
+                            ->rows(10)
+                            ->columnSpanFull(),
+                    ]),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
