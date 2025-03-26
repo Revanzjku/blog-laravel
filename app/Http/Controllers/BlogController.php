@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Message;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -39,5 +40,18 @@ class BlogController extends Controller
     public function contact()
     {
         return view('blog.contact');
+    }
+
+    public function contactMessage(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'message' => 'required'
+        ]);
+
+        Message::create($request->all());
+
+        return redirect()->route('blog.contact')->with('success', 'Pesan anda berhasil dikirim!');
     }
 }

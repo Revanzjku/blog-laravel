@@ -19,5 +19,6 @@ Route::get('/', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/article', [BlogController::class, 'article'])->name('blog.article');
 Route::get('/about-us', [BlogController::class, 'about'])->name('blog.about');
 Route::get('/contact-us', [BlogController::class, 'contact'])->name('blog.contact');
+Route::post('/contact-us/store', [BlogController::class, 'contactMessage'])->name('blog.message');
 Route::get('/{slug}', [BlogController::class, 'show'])->name('blog.show');
 
